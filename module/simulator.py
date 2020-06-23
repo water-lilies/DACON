@@ -179,6 +179,8 @@ class Simulator:
 #         score = blk_diff_m
 #         return score
 
+
+    # 부족분과 초과분을 함께 score에 넣어줌
     def cal_score(self, blk_diffs):
         # Block Order Difference
         blk_diff_m = 0
