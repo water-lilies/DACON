@@ -4,7 +4,41 @@
 
 
 
-## 공정 설명
+#### 평가식
+
+F(x, a): 1 - x/a if x < a else 0   
+
+p: 수요 발생 시 블럭 장난감 생산 부족분 합계
+
+q: 수요 발생 시 블럭 장난감 생산 초과분 합계
+
+c: 성형 공정 변경 시간 합계
+
+c_n: 성형 공정 변경 이벤트 횟수
+
+s: 멈춤 시간 합계
+
+s_n: 멈춤 이벤트 횟수
+
+N: 블럭 장난감 총 수요
+
+M: 전체 시간
+
+Score = 50 x F(p, 10N) 
+
+​			 +20 x F(q, 10N) 
+
+ 			+20 x F(c, M) / (1+0.1 x c_n) 
+
+​			+10 x F(s, M) / (1+0.1 x s_n)
+
+\* 공정 조건을 만족하지 않으면 0점으로 기록됨
+
+\* 데이터 타입이 다른 경우 0점으로 기록됨
+
+
+
+## 1. 공정 설명
 
 1.  원형 제작
 
@@ -109,3 +143,63 @@ A. 실제 공정을 반영하기 위함입니다.
 
 
 
+## 2. 데이터
+
+▶ order.csv (2KB)
+
+date : 구분자
+
+BLK_1 ~ BLK_4 : 블럭 장난감 일별 수요
+
+
+
+▶ stock.csv (3KB)
+
+date : 구분자
+
+PRT_1 ~ BLK_4 : 2020.04.01 보유 각 아이템 재고
+
+
+
+▶ max_count.csv (2KB)
+
+date : 날짜
+
+count : 성형 공정 일별 최대 투입 개수 (A, B 라인 동일)
+
+
+
+▶ change_time.csv (1KB)
+
+from / to: from에서 to로 제품 변경
+
+time : 변경에 필요한 시간 (단위: 시간)
+
+
+
+▶ cut_yield.csv (1KB)
+
+date : 날짜
+
+BLK_1 ~ BLK_4 : 자르기 공정의 각 아이템 월별 양품률 (단위: %)
+
+
+
+▶ sample_submission.csv (103KB)
+
+time : 시간 (type: STRING)
+
+PRT_1 ~ PRT_4 : 원형 생산 투입 개수 (type: INT)
+
+Event_A : A 라인 성형 공정 이벤트 (type: STRING)
+
+- PROCESS: 공정
+- STOP: 멈춤
+- CHECK: 점검, 점검 후 공정에 투입할 아이템 번호를 숫자로 구분. ex) 점검 후 PRT_2를 투입하는 경우 CHECK_2로 표현
+- CHANGE: 성형 공정 아이템 변경, 변경 아이템 번호를 숫자로 구분. ex) 아이템이 MOL_3에서 MOL_2로 변경시 CHANGE_32로 표현
+
+Event_B : B 라인 성형 공정 이벤트 (type: STRING)
+
+MOL_A : A 라인 성형 공정 아이템 투입 개수 (type: FLOAT)
+
+MOL_B : B 라인 성형 공정 아이템 투입 개수 (type: FLOAT)
